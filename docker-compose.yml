@@ -23,3 +23,10 @@ services:
     volumes:
       - ${CONFIG_DIR}/syncthing:/var/syncthing/config
       - ${SYNC_DIR}:/var/syncthing/Sync
+  duckdns:
+    image: linuxserver/duckdns:latest
+    restart: unless-stopped
+    environment:
+      SUBDOMAINS: ${DUCKDNS_SUBDOMAINS}
+      TOKEN: ${DUCKDNS_TOKEN}
+      TZ: UTC
