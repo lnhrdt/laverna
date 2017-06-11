@@ -13,7 +13,7 @@ services:
       TZ: UTC
     volumes:
       - ${CONFIG_DIR}/plex:/config
-      - ${DATA_DIR}/media:/data
+      - ${MEDIA_DIR}:/data
   syncthing:
     image: syncthing/syncthing:latest
     restart: unless-stopped
@@ -22,4 +22,4 @@ services:
       - "22000:22000"
     volumes:
       - ${CONFIG_DIR}/syncthing:/var/syncthing/config
-      - ${DATA_DIR}/sync:/var/syncthing/Sync
+      - ${SYNC_DIR}:/var/syncthing/Sync
