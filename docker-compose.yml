@@ -6,10 +6,6 @@ services:
     ports:
       - "32401:32400"
       - "32401:32400/udp"
-      - "32469:32469"
-      - "32469:32469/udp"
-      - "5353:5353/udp"
-      - "1900:1900/udp"
     environment:
       PLEX_FriendlyName: laverna
       PLEX_ManualPortMappingMode: 1
