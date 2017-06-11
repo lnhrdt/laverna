@@ -1,0 +1,73 @@
+#!/usr/bin/with-contenv bash
+
+PLEX_PREFERENCES="/config/Library/Application Support/Plex Media Server/Preferences.xml"
+EMPTY_PREFERENCES='<?xml version="1.0" encoding="utf-8"?><Preferences/>'
+
+PREFERENCE_KEYS=(
+  AlbumSort
+  allowMediaDeletion
+  allowedNetworks
+  ApertureLibraryXmlPath
+  ApertureSharingEnabled
+  AppCastUrl
+  ArticleStrings
+  autoEmptyTrash
+  autoScanMusicSections
+  BackgroundTranscodeLowPriority
+  BonjourEnabled
+  collectUsageData
+  disableCapabilityChecking
+  disableRemoteSecurity
+  DlnaDeviceDiscoveryInterval
+  DlnaEnabled
+  DlnaPlatinumLoggingLevel
+  EnableIPv6
+  FriendlyName
+  FSEventLibraryUpdatesEnabled
+  GdmEnabled
+  higherBitrate3G
+  iPhotoLibraryXmlPath
+  iPhotoSharingEnabled
+  iTunesLibraryXmlPath
+  LocalAppDataPath
+  LogNumFiles
+  LogVerbose
+  ManualPortMappingMode
+  ManualPortMappingPort
+  secureConnections
+  ScheduledLibraryUpdatesEnabled
+  ScheduledLibraryUpdateInterval
+  TranscoderDefaultDuration
+  TranscoderH264OptionsOverride
+  TranscoderH264Preset
+  TranscoderTempDirectory
+)
+
+if [ ! -f "${PLEX_PREFERENCES}" ]; then
+  mkdir -p "$(dirname "${PLEX_PREFERENCES}")"
+  echo "$EMPTY_PREFERENCES" > "${PLEX_PREFERENCES}"
+fi
+
+getPreference(){
+  local preference_key="$1"
+  xmlstarlet sel -T -t -m "/Preferences" -v "@$preference_key" -n "${PLEX_PREFERENCES}"
+}
+
+setPreference() {
+  local preference_key="$1"
+  local preference_val="$2"
+  if [ -z "$(getPreference "$preference_key")" ]; then
+    xmlstarlet ed --inplace --insert "Preferences" --type attr -n "$preference_key" -v "$preference_val" "${PLEX_PREFERENCES}"
+  else
+    xmlstarlet ed --inplace --update "/Preferences[@$preference_key]/$preference_key" -v "$preference_val" "${PLEX_PREFERENCES}"
+  fi
+}
+
+for key in "${PREFERENCE_KEYS[@]}"
+do
+  env_var_name="PLEX_${key}"
+  value="${!env_var_name}"
+  [ -n "${value}" ] && setPreference "${key}" "${value}"
+done
+
+exit 0
