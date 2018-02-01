@@ -1,3 +1,5 @@
+defaultEntryPoints = ["https","http"]
+
 [api]
 
 [entryPoints]
