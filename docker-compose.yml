@@ -126,3 +126,14 @@ services:
     - "traefik.port=8080"
     - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /sabnzbd/"
 
+  droppy:
+    image: silverwind/droppy:latest
+    restart: unless-stopped
+    volumes:
+    - ${CONFIG_DIR}/droppy:/config
+    - ${MEDIA_DIR}:/files
+    labels:
+    - "traefik.enable=true"
+    - "traefik.port=8989"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /droppy/"
+
