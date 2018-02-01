@@ -92,8 +92,7 @@ services:
     volumes:
     - ${CONFIG_DIR}/sabnzbd:/config
     - ${MEDIA_DIR}/tv:/tv
-    - ${DOWNLOAD_DIR}/sabnzbd-complete:/downloads
-    - ${DOWNLOAD_DIR}/sabnzbd-incomplete:/incomplete-downloads
+    - ${DOWNLOAD_DIR}:/downloads
     labels:
     - "traefik.enable=true"
     - "traefik.port=8080"
