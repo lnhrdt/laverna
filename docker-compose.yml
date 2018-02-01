@@ -13,7 +13,7 @@ services:
     labels:
     - "traefik.enable=true"
     - "traefik.port=8080"
-    - "traefik.frontend.rule=PathPrefixStrip: /traefik"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /traefik"
 
   duckdns:
     image: linuxserver/duckdns:latest
@@ -60,7 +60,7 @@ services:
     labels:
     - "traefik.enable=true"
     - "traefik.port=8384"
-    - "traefik.frontend.rule=PathPrefixStrip: /syncthing/"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /syncthing/"
 
   sonarr:
     build: ./sonarr
@@ -74,7 +74,7 @@ services:
     - ${DOWNLOAD_DIR}:/downloads
     labels:
     - "traefik.enable=true"
-    - "traefik.frontend.rule=PathPrefix: /sonarr/"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefix: /sonarr/"
 
   sabnzbd:
     image: linuxserver/sabnzbd:latest
@@ -89,4 +89,4 @@ services:
     labels:
     - "traefik.enable=true"
     - "traefik.port=8080"
-    - "traefik.frontend.rule=PathPrefixStrip: /sabnzbd/"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /sabnzbd/"
