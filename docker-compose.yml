@@ -1,6 +1,14 @@
 version: "3.4"
 services:
 
+  home:
+    build: ./home
+    restart: unless-stopped
+    labels:
+    - "traefik.enable=true"
+    - "traefik.port=80"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}"
+
   traefik:
     build: ./traefik
     restart: unless-stopped
