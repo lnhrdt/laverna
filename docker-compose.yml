@@ -31,6 +31,18 @@ services:
       TOKEN: ${DUCKDNS_TOKEN}
       TZ: UTC
 
+  plexpy:
+    image: linuxserver/plexpy:latest
+    volumes:
+    - ${CONFIG_DIR}/plexpy:/config
+    - ${CONFIG_DIR}/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro
+    environment:
+      TZ: UTC
+    labels:
+    - "traefik.enable=true"
+    - "traefik.port=8181"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /plexpy/"
+
   plex:
     build: ./plex
     restart: unless-stopped
