@@ -82,7 +82,23 @@ services:
     - ${DOWNLOAD_DIR}:/downloads
     labels:
     - "traefik.enable=true"
+    - "traefik.port=8989"
     - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefix: /sonarr/"
+
+  radarr:
+    build: ./radarr
+    restart: unless-stopped
+    environment:
+      URL_BASE: radarr
+      TZ: UTC
+    volumes:
+    - ${CONFIG_DIR}/radarr:/config
+    - ${MEDIA_DIR}/movies:/movies
+    - ${DOWNLOAD_DIR}:/downloads
+    labels:
+    - "traefik.enable=true"
+    - "traefik.port=7878"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefix: /radarr/"
 
   sabnzbd:
     image: linuxserver/sabnzbd:latest
