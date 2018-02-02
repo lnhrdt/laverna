@@ -57,7 +57,7 @@ services:
       VERSION: latest
     volumes:
     - ${CONFIG_DIR}/plex:/config
-    - ${MEDIA_DIR}:/data
+    - ${DATA_DIR}/media:/media
     labels:
     - "traefik.enable=true"
     - "traefik.port=32400"
@@ -90,8 +90,7 @@ services:
       TZ: UTC
     volumes:
     - ${CONFIG_DIR}/sonarr:/config
-    - ${MEDIA_DIR}/tv:/tv
-    - ${DOWNLOAD_DIR}:/downloads
+    - ${DATA_DIR}:/data
     labels:
     - "traefik.enable=true"
     - "traefik.port=8989"
@@ -105,8 +104,7 @@ services:
       TZ: UTC
     volumes:
     - ${CONFIG_DIR}/radarr:/config
-    - ${MEDIA_DIR}/movies:/movies
-    - ${DOWNLOAD_DIR}:/downloads
+    - ${DATA_DIR}:/data
     labels:
     - "traefik.enable=true"
     - "traefik.port=7878"
@@ -119,8 +117,7 @@ services:
       TZ: UTC
     volumes:
     - ${CONFIG_DIR}/sabnzbd:/config
-    - ${MEDIA_DIR}/tv:/tv
-    - ${DOWNLOAD_DIR}:/downloads
+    - ${DATA_DIR}:/data
     labels:
     - "traefik.enable=true"
     - "traefik.port=8080"
@@ -131,7 +128,7 @@ services:
     restart: unless-stopped
     volumes:
     - ${CONFIG_DIR}/droppy:/config
-    - ${MEDIA_DIR}:/files
+    - ${DATA_DIR}:/files
     labels:
     - "traefik.enable=true"
     - "traefik.port=8989"
