@@ -3,4 +3,6 @@ set -ex
 
 BASEDIR=$(dirname "$0")
 cd $BASEDIR
-docker-compose up --build --remove-orphans -d
+docker-compose pull
+docker-compose build --pull
+docker-compose up --remove-orphans -d
