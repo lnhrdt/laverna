@@ -134,3 +134,13 @@ services:
     - "traefik.port=8989"
     - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /droppy/"
 
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: unless-stopped
+    ports:
+    - "1025:1025"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.port=8025"
+    - "traefik.frontend.rule=Host: ${DOMAIN_NAME}; PathPrefixStrip: /mailhog/"
+
