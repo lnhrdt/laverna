@@ -66,6 +66,9 @@ services:
   syncthing:
     image: linuxserver/syncthing:latest
     restart: unless-stopped
+    ports:
+    - "22000:22000"
+    - "21027:21027/udp"
     hostname: laverna
     healthcheck:
       disable: true
