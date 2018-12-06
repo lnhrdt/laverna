@@ -64,16 +64,11 @@ services:
     - "traefik.frontend.rule=Host:plex.${DOMAIN_NAME}"
 
   syncthing:
-    build: ./syncthing
+    image: linuxserver/syncthing:latest
     restart: unless-stopped
     hostname: laverna
     healthcheck:
       disable: true
-    environment:
-      STNODEFAULTFOLDER: "true"
-      LISTEN_PORT: "22001"
-    ports:
-    - "22001:22001"
     volumes:
     - ${CONFIG_DIR}/syncthing:/config
     - ${SYNC_DIR}:/data
